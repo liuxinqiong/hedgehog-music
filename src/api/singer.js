@@ -30,7 +30,8 @@ export function getSingerDetail(singerId) {
     begin: 0,
     num: 80,
     songstatus: 1,
-    singermid: singerId
+    singermid: singerId,
+    g_tk: 1664029744
   })
 
   return jsonp(url, data, options)
