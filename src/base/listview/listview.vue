@@ -87,6 +87,9 @@ export default {
         scroll(pos) {
             this.scrollY = pos.y
         },
+        refresh() {
+            this.$refs.list.refresh()
+        },
         _scrollTo(index) {
             // 0 也可以
             if(!index && index !== 0) {
