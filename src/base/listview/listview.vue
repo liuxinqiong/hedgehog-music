@@ -88,7 +88,7 @@ export default {
             this.scrollY = pos.y
         },
         refresh() {
-            this.$refs.list.refresh()
+            this.$refs.listview.refresh()
         },
         _scrollTo(index) {
             // 0 也可以
