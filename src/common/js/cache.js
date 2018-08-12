@@ -4,13 +4,16 @@ import storage from 'good-storage'
 const SERACH_KEY = "__search__" // 内部key，减少冲突可能性
 const SEARCH_MAX_LENGTH = 15
 
+const PLAY_KEY = '__play__'
+const PLAY_MAX_LENGTH = 200
+
 function insertArray(arr, val, compare, maxlen) {
     const index = arr.findIndex(compare)
     if(index === 0) {
         return
     }
     if(index > 0) {
-        arr.aplice(index, 1)
+        arr.splice(index, 1)
     }
     arr.unshift(val)
     if(maxlen && arr.length > maxlen) {
@@ -50,4 +53,17 @@ export function deleteSearch(query) {
 export function clearSearch() {
     storage.remove(SERACH_KEY)
     return []
+}
+
+export function savePlay(song) {
+    let songs = storage.get(PLAY_KEY, [])
+    insertArray(songs, song, (item) => {
+        return item.id === song.id
+    }, PLAY_MAX_LENGTH)
+    storage.set(PLAY_KEY, songs)
+    return songs
+}
+
+export function loadPlay() {
+    return storage.get(PLAY_KEY, [])
 }
