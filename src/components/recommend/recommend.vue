@@ -41,58 +41,58 @@ import { playlistMixin } from 'common/js/mixin'
 import { mapMutations } from 'vuex'
 
 export default {
-    mixins: [playlistMixin],
-    data() {
-        return {
-            recommends: [],
-            discList: []
-        }
-    },
-    created() {
-        this._getRecommend()
-        this._getDiscList()
-    },
-    methods: {
-        handlePlaylist(playlist) {
-            const bottom = playlist.length > 0 ? '60px':''
-            this.$refs.recommend.style.bottom = bottom
-            this.$refs.scroll.refresh()
-        },
-        selectItem(item) {
-            this.$router.push({
-                path: `recommend/${item.dissid}`
-            })
-            this.setDisc(item)
-        },
-        _getRecommend() {
-            getRecommend().then((res) => {
-                if(res.code === ERR_OK){
-                    this.recommends = res.data.slider
-                }
-            })
-        },
-        _getDiscList() {
-            getDiscList().then((res) => {
-                if(res.code === ERR_OK) {
-                    this.discList = res.data.list
-                }
-            })
-        },
-        loadImage() {
-            if(!this.checkLoaded) {
-                this.$refs.scroll.refresh()
-                this.checkLoaded = true
-            }  
-        },
-        ...mapMutations({
-            setDisc: 'SET_DISC'
-        })
-    },
-    components: {
-        Slider,
-        Scroll,
-        Loading
+  mixins: [playlistMixin],
+  data() {
+    return {
+      recommends: [],
+      discList: []
     }
+  },
+  created() {
+    this._getRecommend()
+    this._getDiscList()
+  },
+  methods: {
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.recommend.style.bottom = bottom
+      this.$refs.scroll.refresh()
+    },
+    selectItem(item) {
+      this.$router.push({
+        path: `recommend/${item.dissid}`
+      })
+      this.setDisc(item)
+    },
+    _getRecommend() {
+      getRecommend().then((res) => {
+        if (res.code === ERR_OK) {
+          this.recommends = res.data.slider
+        }
+      })
+    },
+    _getDiscList() {
+      getDiscList().then((res) => {
+        if (res.code === ERR_OK) {
+          this.discList = res.data.list
+        }
+      })
+    },
+    loadImage() {
+      if (!this.checkLoaded) {
+        this.$refs.scroll.refresh()
+        this.checkLoaded = true
+      }
+    },
+    ...mapMutations({
+      setDisc: 'SET_DISC'
+    })
+  },
+  components: {
+    Slider,
+    Scroll,
+    Loading
+  }
 }
 </script>
 <style lang="stylus" scoped>

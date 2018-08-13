@@ -45,77 +45,77 @@ import Scroll from '@/base/scroll/scroll'
 import { playlistMixin, searchMixin } from 'common/js/mixin'
 
 export default {
-    mixins: [ playlistMixin, searchMixin ],
-    data() {
-        return {
-            hotKey: [],
-            // query: ''
-        }
-    },
-    components: {
-        SearchBox,
-        Suggest,
-        SearchList,
-        Confirm,
-        Scroll
-    },
-    computed: {
-        shortCut() {
-            return this.hotKey.concat(this.searchHistory)
-        },
-        // ...mapGetters([
-        //     'searchHistory'
-        // ])
-    },
-    watch: {
-        query(newQuery) {
-            if(!newQuery) {
-                setTimeout(() => {
-                    this.$refs.shortcut.refresh()
-                }, 20)
-            }
-        }
-    },
-    methods: {
-        handlePlaylist(playlist) {
-            const bottom = playlist.length > 0 ? '60px' : ''
-            this.$refs.shortcutWrapper.style.bottom = bottom
-            this.$refs.shortcut.refresh()
-            this.$refs.searchResult.style.bottom = bottom
-            this.$refs.suggest.refresh()
-        },
-        // addQuery(query) {
-        //     this.$refs.searchBox.setQuery(query)
-        // },
-        // onQueryChange(query) {
-        //     this.query = query
-        // },
-        // blurInput() {
-        //     this.$refs.searchBox.blur()
-        // },
-        // saveSearch() {
-        //     this.saveSearchHistory(this.query)
-        // },
-        showConfirm() {
-            this.$refs.confirm.show()
-            // this.clearSearchHistory()
-        },
-        _getHotKey() {
-            getHotKey().then(res => {
-                if(res.code === ERR_OK) {
-                    this.hotKey = res.data.hotkey.slice(0, 10)
-                }
-            })
-        },
-        ...mapActions([
-            // 'saveSearchHistory',
-            // 'deleteSearchHistory',
-            'clearSearchHistory'
-        ])
-    },
-    created() {
-        this._getHotKey()
+  mixins: [ playlistMixin, searchMixin ],
+  data() {
+    return {
+      hotKey: []
+      // query: ''
     }
+  },
+  components: {
+    SearchBox,
+    Suggest,
+    SearchList,
+    Confirm,
+    Scroll
+  },
+  computed: {
+    shortCut() {
+      return this.hotKey.concat(this.searchHistory)
+    }
+    // ...mapGetters([
+    //     'searchHistory'
+    // ])
+  },
+  watch: {
+    query(newQuery) {
+      if (!newQuery) {
+        setTimeout(() => {
+          this.$refs.shortcut.refresh()
+        }, 20)
+      }
+    }
+  },
+  methods: {
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.shortcutWrapper.style.bottom = bottom
+      this.$refs.shortcut.refresh()
+      this.$refs.searchResult.style.bottom = bottom
+      this.$refs.suggest.refresh()
+    },
+    // addQuery(query) {
+    //     this.$refs.searchBox.setQuery(query)
+    // },
+    // onQueryChange(query) {
+    //     this.query = query
+    // },
+    // blurInput() {
+    //     this.$refs.searchBox.blur()
+    // },
+    // saveSearch() {
+    //     this.saveSearchHistory(this.query)
+    // },
+    showConfirm() {
+      this.$refs.confirm.show()
+      // this.clearSearchHistory()
+    },
+    _getHotKey() {
+      getHotKey().then(res => {
+        if (res.code === ERR_OK) {
+          this.hotKey = res.data.hotkey.slice(0, 10)
+        }
+      })
+    },
+    ...mapActions([
+      // 'saveSearchHistory',
+      // 'deleteSearchHistory',
+      'clearSearchHistory'
+    ])
+  },
+  created() {
+    this._getHotKey()
+  }
 }
 </script>
 

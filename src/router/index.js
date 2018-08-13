@@ -42,7 +42,7 @@ export default new Router({
       component: Rank,
       children: [
         {
-          path:':id',
+          path: ':id',
           component: TopList
         }
       ]

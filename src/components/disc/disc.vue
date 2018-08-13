@@ -11,47 +11,47 @@ import { ERR_OK } from '@/api/config'
 import { createSong } from 'common/js/song'
 
 export default {
-    data() {
-        return {
-            songs: []
-        }
-    },
-    computed: {
-        title() {
-            return this.disc.dissname
-        },
-        bgImage() {
-            return this.disc.imgurl
-        },
-        ...mapGetters([
-            'disc'
-        ])
-    },
-    methods: {
-        _getSongList() {
-            if(!this.disc.dissid) {
-                this.$router.push('/recommend')
-            }
-            getSongList(this.disc.dissid).then(res => {
-                if(res.code === ERR_OK) {
-                    this.songs = this._normalizeSongs(res.cdlist[0].songlist)
-                }
-            })
-        },
-        _normalizeSongs(list) {
-            let ret = []
-            list.forEach(musicData => {
-                ret.push(createSong(musicData))
-            })
-            return ret
-        }
-    },
-    created() {
-        this._getSongList()
-    },
-    components: {
-        MusicList
+  data() {
+    return {
+      songs: []
     }
+  },
+  computed: {
+    title() {
+      return this.disc.dissname
+    },
+    bgImage() {
+      return this.disc.imgurl
+    },
+    ...mapGetters([
+      'disc'
+    ])
+  },
+  methods: {
+    _getSongList() {
+      if (!this.disc.dissid) {
+        this.$router.push('/recommend')
+      }
+      getSongList(this.disc.dissid).then(res => {
+        if (res.code === ERR_OK) {
+          this.songs = this._normalizeSongs(res.cdlist[0].songlist)
+        }
+      })
+    },
+    _normalizeSongs(list) {
+      let ret = []
+      list.forEach(musicData => {
+        ret.push(createSong(musicData))
+      })
+      return ret
+    }
+  },
+  created() {
+    this._getSongList()
+  },
+  components: {
+    MusicList
+  }
 }
 </script>
 

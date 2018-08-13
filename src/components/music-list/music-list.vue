@@ -37,106 +37,106 @@ const transform = prefixStyle('transform')
 const backdrop = prefixStyle('backdrop-filter')
 
 export default {
-    mixins: [playlistMixin],
-    props: {
-        bgImage: {
-            type: String,
-            default: ''
-        },
-        songs: {
-            type: Array,
-            default: []
-        },
-        title: {
-            type: String,
-            default: ''
-        },
-        rank: {
-            type: Boolean,
-            default: false
-        }
+  mixins: [playlistMixin],
+  props: {
+    bgImage: {
+      type: String,
+      default: ''
     },
-    data() {
-        return {
-            scrollY: 0
-        }
+    songs: {
+      type: Array,
+      default: []
     },
-    created() {
-        this.probeType = 3
-        this.listenScroll = true
+    title: {
+      type: String,
+      default: ''
     },
-    mounted() {
-        this.imageHeight = this.$refs.bgImage.clientHeight
-        this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT
-        this.$refs.list.$el.style.top = `${this.imageHeight}px`
-    },
-    components: {
-        Scroll,
-        SongList,
-        Loading
-    },
-    computed: {
-        bgStyle() {
-            return `background-image:url(${this.bgImage})`
-        }
-    },
-    methods: {
-        handlePlaylist(playlist) {
-            const bottom = playlist.length > 0 ? '60px' : ''
-            this.$refs.list.$el.style.bottom = bottom
-            this.$refs.list.refresh()
-        },
-        scroll(pos) {
-            this.scrollY = pos.y
-        },
-        back() {
-            this.$router.back()
-        },
-        selectItem(item, index) {
-            this.selectPlay({
-                list: this.songs,
-                index
-            })
-        },
-        random() {
-            this.randomPlay({
-                list: this.songs
-            })
-        },
-        ...mapActions([
-            'selectPlay',
-            'randomPlay'
-        ])
-    },
-    watch: {
-        scrollY(newY) {
-            let translateY = Math.max(this.minTranslateY, newY)
-            let zIndex = 0
-            let scale = 1
-            let blur = 0
-            this.$refs.layer.style[transform] = `translate3d(0, ${translateY}px, 0)`
-            const percent = Math.abs(newY / this.imageHeight)
-            if(newY > 0) {
-                scale = 1 + percent
-                zIndex = 10
-            } else {
-                blur = Math.min(20 * percent, 20)
-            }
-            this.$refs.filter.style[backdrop] = `blue(${blur}px)`
-            if(newY < this.minTranslateY) {
-                zIndex = 10;
-                this.$refs.bgImage.style.paddingTop = 0
-                this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
-                this.$refs.playBtn.style.display = 'none'
-            } else {
-                this.$refs.bgImage.style.paddingTop = '70%'
-                this.$refs.bgImage.style.height = 0
-                this.$refs.playBtn.style.display = ''
-            }
-            this.$refs.bgImage.style.zIndex = zIndex
-            this.$refs.bgImage.style[transform] = `scale(${scale})`
-        }
+    rank: {
+      type: Boolean,
+      default: false
     }
+  },
+  data() {
+    return {
+      scrollY: 0
+    }
+  },
+  created() {
+    this.probeType = 3
+    this.listenScroll = true
+  },
+  mounted() {
+    this.imageHeight = this.$refs.bgImage.clientHeight
+    this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT
+    this.$refs.list.$el.style.top = `${this.imageHeight}px`
+  },
+  components: {
+    Scroll,
+    SongList,
+    Loading
+  },
+  computed: {
+    bgStyle() {
+      return `background-image:url(${this.bgImage})`
+    }
+  },
+  methods: {
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.list.$el.style.bottom = bottom
+      this.$refs.list.refresh()
+    },
+    scroll(pos) {
+      this.scrollY = pos.y
+    },
+    back() {
+      this.$router.back()
+    },
+    selectItem(item, index) {
+      this.selectPlay({
+        list: this.songs,
+        index
+      })
+    },
+    random() {
+      this.randomPlay({
+        list: this.songs
+      })
+    },
+    ...mapActions([
+      'selectPlay',
+      'randomPlay'
+    ])
+  },
+  watch: {
+    scrollY(newY) {
+      let translateY = Math.max(this.minTranslateY, newY)
+      let zIndex = 0
+      let scale = 1
+      let blur = 0
+      this.$refs.layer.style[transform] = `translate3d(0, ${translateY}px, 0)`
+      const percent = Math.abs(newY / this.imageHeight)
+      if (newY > 0) {
+        scale = 1 + percent
+        zIndex = 10
+      } else {
+        blur = Math.min(20 * percent, 20)
+      }
+      this.$refs.filter.style[backdrop] = `blue(${blur}px)`
+      if (newY < this.minTranslateY) {
+        zIndex = 10
+        this.$refs.bgImage.style.paddingTop = 0
+        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
+        this.$refs.playBtn.style.display = 'none'
+      } else {
+        this.$refs.bgImage.style.paddingTop = '70%'
+        this.$refs.bgImage.style.height = 0
+        this.$refs.playBtn.style.display = ''
+      }
+      this.$refs.bgImage.style.zIndex = zIndex
+      this.$refs.bgImage.style[transform] = `scale(${scale})`
+    }
+  }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

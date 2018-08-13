@@ -89,7 +89,7 @@ function genUrlMid(mids, types) {
   const guid = getUid()
   return {
     module: 'vkey.GetVkeyServer',
-    method: "CgiGetVkey",
+    method: 'CgiGetVkey',
     param: {
       guid,
       songmid: mids,

@@ -18,60 +18,60 @@ import { prefixStyle } from 'common/js/dom'
 const transform = prefixStyle('transform')
 const progressBtnWidth = 16
 export default {
-    props: {
-        percent: {
-            type: Number,
-            default: 0
-        }
-    },
-    created() {
-        this.touch = {}
-    },
-    methods: {
-        progressTouchStart(e) {
-            this.touch.initiated = true
-            this.touch.startX = e.touches[0].pageX
-            this.touch.left = this.$refs.progress.clientWidth
-        },
-        progressTouchMove(e) {
-            if(!this.touch.initiated) {
-                return
-            }
-            const deltaX = e.touches[0].pageX - this.touch.startX
-            const offsetWidth = Math.min(this.$refs.progressBar.clientWidth - progressBtnWidth, Math.max(0, this.touch.left + deltaX))
-            this._offset(offsetWidth)
-        },
-        progressTouchEnd(e) {
-            this.touch.initiated = false
-            this._togglePercent()
-        },
-        progressClick(e) {
-            const rect = this.$refs.progressBar.getBoundingClientRect()
-            const offsetWidth = e.pageX - rect.left
-            this._offset(offsetWidth) 
-            // 点击 progressBtn 时，e.offsetX 获取不对
-            // this._offset(e.offsetX) 
-            this._togglePercent()
-        },
-        _offset(offsetWidth) {
-            this.$refs.progress.style.width = `${offsetWidth}px`
-            this.$refs.progressBtn.style[transform] = `translate3d(${offsetWidth}px, 0, 0)` 
-        },
-        _togglePercent() {
-            const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
-            const percent = this.$refs.progress.clientWidth / barWidth
-            this.$emit('percentChange', percent)
-        }
-    },
-    watch: {
-        percent(newPercent) {
-            if(newPercent >= 0 && !this.touch.initiated) {
-                const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
-                const offsetWidth = newPercent * barWidth;
-                this._offset(offsetWidth)
-            }
-        }
+  props: {
+    percent: {
+      type: Number,
+      default: 0
     }
+  },
+  created() {
+    this.touch = {}
+  },
+  methods: {
+    progressTouchStart(e) {
+      this.touch.initiated = true
+      this.touch.startX = e.touches[0].pageX
+      this.touch.left = this.$refs.progress.clientWidth
+    },
+    progressTouchMove(e) {
+      if (!this.touch.initiated) {
+        return
+      }
+      const deltaX = e.touches[0].pageX - this.touch.startX
+      const offsetWidth = Math.min(this.$refs.progressBar.clientWidth - progressBtnWidth, Math.max(0, this.touch.left + deltaX))
+      this._offset(offsetWidth)
+    },
+    progressTouchEnd(e) {
+      this.touch.initiated = false
+      this._togglePercent()
+    },
+    progressClick(e) {
+      const rect = this.$refs.progressBar.getBoundingClientRect()
+      const offsetWidth = e.pageX - rect.left
+      this._offset(offsetWidth)
+      // 点击 progressBtn 时，e.offsetX 获取不对
+      // this._offset(e.offsetX)
+      this._togglePercent()
+    },
+    _offset(offsetWidth) {
+      this.$refs.progress.style.width = `${offsetWidth}px`
+      this.$refs.progressBtn.style[transform] = `translate3d(${offsetWidth}px, 0, 0)`
+    },
+    _togglePercent() {
+      const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
+      const percent = this.$refs.progress.clientWidth / barWidth
+      this.$emit('percentChange', percent)
+    }
+  },
+  watch: {
+    percent(newPercent) {
+      if (newPercent >= 0 && !this.touch.initiated) {
+        const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
+        const offsetWidth = newPercent * barWidth
+        this._offset(offsetWidth)
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

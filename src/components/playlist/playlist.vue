@@ -47,92 +47,92 @@ import { playerMixin } from 'common/js/mixin'
 import AddSong from '@/components/add-song/add-song'
 
 export default {
-    mixins: [ playerMixin ],
-    data() {
-        return {
-            showFlag: false,
-            refreshDelay: 100
-        }
-    },
-    components: {
-        Scroll,
-        Confirm,
-        AddSong
-    },
-    computed: {
-        modeText() {
-            return this.mode === playMode.sequence ? '顺序播放' : this.mode === playMode.random ? '随机播放' : '单曲循环'
-        }
-        // ...mapGetters([
-        //     'sequenceList',
-        //     'currentSong',
-        //     'mode',
-        //     'playlist'
-        // ])
-    },
-    methods: {
-        showConfirm() {
-            this.$refs.confirm.show()
-        },
-        confirmClear() {
-            this.deleteSongList()
-            this.hide()
-        },
-        getCurrentIcon(item) {
-            if(item.id === this.currentSong.id) {
-                return 'icon-play'
-            }
-            return ''
-        },
-        selectItem(item, index) {
-            if(this.mode === playMode.random) {
-                index = this.playlist.findIndex((song) => song.id === item.id)
-            }
-            this.setCurrentIndex(index)
-            this.setPlayingState(true)
-        },
-        scrollToCurrent(current) {
-            const index = this.sequenceList.findIndex( song => current.id === song.id)
-            this.$refs.listContent.scrollToElement(this.$refs.listItem[index], 300)
-        },
-        show() {
-            this.showFlag = true
-            setTimeout(() => {
-                this.$refs.listContent.refresh()
-                this.scrollToCurrent(this.currentSong)
-            }, 20)
-        },
-        hide() {
-            this.showFlag = false
-        },
-        deleteOne(item) {
-            this.deleteSong(item)
-            if(!this.playlist.length) {
-                this.hide()
-            }
-        },
-        addSong() {
-            this.$refs.addSong.show()
-        },
-        // ...mapMutations({
-        //     setCurrentIndex: 'SET_CURRENT_INDEX',
-        //     setPlayingState: 'SET_PLAYING_STATE'
-        // }),
-        ...mapActions([
-            'deleteSong',
-            'deleteSongList'
-        ])
-    },
-    watch: {
-        currentSong(newSong, oldSong) {
-            if(!this.showFlag || newSong.id === oldSong.id) {
-                return
-            }
-            setTimeout(() => {
-                this.scrollToCurrent(newSong)
-            }, 20)
-        }
+  mixins: [ playerMixin ],
+  data() {
+    return {
+      showFlag: false,
+      refreshDelay: 100
     }
+  },
+  components: {
+    Scroll,
+    Confirm,
+    AddSong
+  },
+  computed: {
+    modeText() {
+      return this.mode === playMode.sequence ? '顺序播放' : this.mode === playMode.random ? '随机播放' : '单曲循环'
+    }
+    // ...mapGetters([
+    //     'sequenceList',
+    //     'currentSong',
+    //     'mode',
+    //     'playlist'
+    // ])
+  },
+  methods: {
+    showConfirm() {
+      this.$refs.confirm.show()
+    },
+    confirmClear() {
+      this.deleteSongList()
+      this.hide()
+    },
+    getCurrentIcon(item) {
+      if (item.id === this.currentSong.id) {
+        return 'icon-play'
+      }
+      return ''
+    },
+    selectItem(item, index) {
+      if (this.mode === playMode.random) {
+        index = this.playlist.findIndex((song) => song.id === item.id)
+      }
+      this.setCurrentIndex(index)
+      this.setPlayingState(true)
+    },
+    scrollToCurrent(current) {
+      const index = this.sequenceList.findIndex(song => current.id === song.id)
+      this.$refs.listContent.scrollToElement(this.$refs.listItem[index], 300)
+    },
+    show() {
+      this.showFlag = true
+      setTimeout(() => {
+        this.$refs.listContent.refresh()
+        this.scrollToCurrent(this.currentSong)
+      }, 20)
+    },
+    hide() {
+      this.showFlag = false
+    },
+    deleteOne(item) {
+      this.deleteSong(item)
+      if (!this.playlist.length) {
+        this.hide()
+      }
+    },
+    addSong() {
+      this.$refs.addSong.show()
+    },
+    // ...mapMutations({
+    //     setCurrentIndex: 'SET_CURRENT_INDEX',
+    //     setPlayingState: 'SET_PLAYING_STATE'
+    // }),
+    ...mapActions([
+      'deleteSong',
+      'deleteSongList'
+    ])
+  },
+  watch: {
+    currentSong(newSong, oldSong) {
+      if (!this.showFlag || newSong.id === oldSong.id) {
+        return
+      }
+      setTimeout(() => {
+        this.scrollToCurrent(newSong)
+      }, 20)
+    }
+  }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

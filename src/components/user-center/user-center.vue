@@ -38,75 +38,75 @@ import Song from 'common/js/song'
 import { playlistMixin } from 'common/js/mixin'
 import NoResult from '@/base/no-result/no-result'
 export default {
-    mixins: [ playlistMixin ],
-    data() {
-        return {
-            currentIndex: 0,
-            switches: [
-                { name: '我喜欢的'},
-                { name: '最近听得'}
-            ]
-        }
-    },
-    components: {
-        Switches,
-        Scroll,
-        SongList,
-        NoResult
-    },
-    computed: {
-        noResult() {
-            if(this.currentIndex === 0) {
-                return !this.favoriteList.length
-            } else {
-                return !this.playHistory.length
-            }
-        },
-        noResultDesc() {
-            if(this.currentIndex === 0) {
-                return '暂无收藏歌曲'
-            } else {
-                return '你还没有听过歌曲'
-            }
-        },
-        ...mapGetters([
-            'favoriteList',
-            'playHistory'
-        ])
-    },
-    methods: {
-        handlePlaylist(playlist) {
-            const bottom = playlist.length > 0 ? '60px' : ''
-            this.$refs.listWrapper.style.bottom = bottom
-            this.$refs.favoriteList && this.$refs.favoriteList.refresh()
-            this.$refs.playList && this.$refs.playList.refresh()
-        },
-        back() {
-            this.$router.back()
-        },
-        switchItem(index){
-            this.currentIndex = index
-        },
-        selectSong(song) {
-            this.insertSong(new Song(song))
-        },
-        random() {
-            let list = this.currentIndex === 0 ? this.favoriteList : this.playHistory
-            if(list.length === 0) {
-                return
-            }
-            list = list.map(song => {
-                return new Song(song)
-            })
-            this.randomPlay({
-                list
-            })
-        },
-        ...mapActions([
-            'insertSong',
-            'randomPlay'
-        ])
+  mixins: [ playlistMixin ],
+  data() {
+    return {
+      currentIndex: 0,
+      switches: [
+        { name: '我喜欢的'},
+        { name: '最近听得'}
+      ]
     }
+  },
+  components: {
+    Switches,
+    Scroll,
+    SongList,
+    NoResult
+  },
+  computed: {
+    noResult() {
+      if (this.currentIndex === 0) {
+        return !this.favoriteList.length
+      } else {
+        return !this.playHistory.length
+      }
+    },
+    noResultDesc() {
+      if (this.currentIndex === 0) {
+        return '暂无收藏歌曲'
+      } else {
+        return '你还没有听过歌曲'
+      }
+    },
+    ...mapGetters([
+      'favoriteList',
+      'playHistory'
+    ])
+  },
+  methods: {
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.listWrapper.style.bottom = bottom
+      this.$refs.favoriteList && this.$refs.favoriteList.refresh()
+      this.$refs.playList && this.$refs.playList.refresh()
+    },
+    back() {
+      this.$router.back()
+    },
+    switchItem(index) {
+      this.currentIndex = index
+    },
+    selectSong(song) {
+      this.insertSong(new Song(song))
+    },
+    random() {
+      let list = this.currentIndex === 0 ? this.favoriteList : this.playHistory
+      if (list.length === 0) {
+        return
+      }
+      list = list.map(song => {
+        return new Song(song)
+      })
+      this.randomPlay({
+        list
+      })
+    },
+    ...mapActions([
+      'insertSong',
+      'randomPlay'
+    ])
+  }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

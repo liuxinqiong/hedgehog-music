@@ -13,10 +13,10 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
-    actions,
-    getters,
-    state,
-    mutations,
-    strict: debug,
-    plugins: debug ? [CreateLogger()] : []
+  actions,
+  getters,
+  state,
+  mutations,
+  strict: debug,
+  plugins: debug ? [CreateLogger()] : []
 })
