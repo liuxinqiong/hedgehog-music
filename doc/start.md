@@ -16,3 +16,9 @@ fastclick：解决移动端点击300ms延迟
   * 多个组件之间状态共享
   * 路由跳转复杂数据传递
 * 如何使用
+
+调试与抓包
+vConsole：微信前端开源，直接在页面上看到console信息
+抓包：Charles（mac） fiddle（windows）
+
+撒花
