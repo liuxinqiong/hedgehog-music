@@ -11,7 +11,7 @@ fastclick：解决移动端点击300ms延迟
 * 是什么
   * 状态管理模式，集中式存储应用的所有组件的状态，并以相应的规则保证状态以一种可以预测的方式发生变化
   * 闭环：state -> components -> actions(api) -> mutations -> state
-  * 问题：不使用vuex，我们可以直接修改组件数据，数据的变化会直接映射到DOM上，在vuex中，不能直接修改组件数据，比如dispatch action或commit mutations来修改组局，反而变得繁琐了
+  * 问题：不使用vuex，我们可以直接修改组件数据，数据的变化会直接映射到DOM上，在vuex中，不能直接修改组件数据，必须通过dispatch action或commit mutations来修改组局，反而变得繁琐了
 * 解决什么问题
   * 多个组件之间状态共享
   * 路由跳转复杂数据传递

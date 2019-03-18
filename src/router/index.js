@@ -81,7 +81,7 @@ export default new Router({
       children: [
         {
           path: ':id',
-          component: resolve => require(['components/singer/singer'], resolve)
+          component: resolve => require(['components/singer-detail/singer-detail'], resolve)
         }
       ]
     },
